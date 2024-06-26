@@ -31,7 +31,8 @@ options.binary_location = firefox_binary_path
 options.set_preference("browser.download.folderList", 2)
 options.set_preference("browser.download.manager.showWhenStarting", False)
 options.set_preference("browser.download.dir", "C:/Users/menon/Downloads")
-options.set_preference("browser.helperApps.neverAsk.saveToDisk", "application/vnd.ms-excel")
+options.set_preference("browser.helperApps.neverAsk.saveToDisk", "application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/octet-stream")
+options.set_preference("pdfjs.disabled", True)  # Desabilita visualizador de PDF embutido
 
 # Especificar o caminho para o GeckoDriver
 service = Service(gecko_driver_path, log_output="geckodriver.log")
@@ -93,7 +94,7 @@ try:
     driver.execute_script("arguments[0].click();", export_button)
     
     # Espera o download do arquivo Excel (ajuste o tempo conforme necessário)
-    time.sleep(7)  # Aguarde pelo tempo necessário para que o download seja concluído
+    time.sleep(10)  # Aguarde pelo tempo necessário para que o download seja concluído
 
 finally:
     # Para facilitar o debug, vamos deixar o navegador aberto comentando a linha abaixo:
@@ -108,7 +109,6 @@ if os.path.exists(excel_path):
     # Carrega o arquivo Excel baixado e processa com pandas
     df = pd.read_excel(excel_path)
     
-
     # Exemplo de manipulação de dados com pandas
     print(df.head())
 else:
